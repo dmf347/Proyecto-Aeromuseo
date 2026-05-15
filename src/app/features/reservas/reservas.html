@@ -1,0 +1,141 @@
+<div class="bg-slate-900 min-h-screen text-slate-100 antialiased relative overflow-x-hidden">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-0">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
+            class="w-full h-full object-cover opacity-10 mix-blend-luminosity">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-950/80 via-slate-900/90 to-slate-900"></div>
+    </div>
+
+    <!-- Decorative Blurs -->
+    <div class="fixed top-20 -left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl z-0"></div>
+    <div class="fixed bottom-10 -right-20 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl z-0"></div>
+
+    <!-- Header / Navbar -->
+    <header class="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center px-6 py-4">
+            <a routerLink="/" class="flex items-center space-x-4 group">
+                <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20 group-hover:bg-white/20 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </div>
+                <span class="text-xl font-bold text-white group-hover:text-cyan-400 transition">Volver</span>
+            </a>
+
+            <!-- Perfil / Logout en Header -->
+            <div class="flex items-center">
+                <ng-container *ngIf="authService.usuario$ | async as user">
+                    <div class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-4 pr-2 py-1 backdrop-blur-md">
+                        <div class="flex flex-col text-right">
+                            <span class="text-white text-sm font-semibold leading-tight">{{ user.nombre }}</span>
+                            <span class="text-cyan-400 text-xs">{{ user.rol === 'admin' ? 'Administrador' : 'Visitante' }}</span>
+                        </div>
+                        <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold shadow-inner">
+                            {{ user.nombre.charAt(0).toUpperCase() }}
+                        </div>
+                        <button (click)="authService.logout()" class="ml-2 p-2 hover:bg-white/10 rounded-full transition text-slate-300 hover:text-red-400" title="Cerrar sesión">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </header>
+
+    <div class="relative z-10 w-full max-w-2xl mx-auto pt-32 pb-20 px-6">
+        
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
+                Solicitud de Visita Guiada
+            </h1>
+            <p class="text-slate-400 text-lg">
+                Completa el formulario para reservar tu visita con nuestros guías voluntarios. Te confirmaremos disponibilidad lo antes posible.
+            </p>
+        </div>
+
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8 md:p-12">
+            
+            <!-- Mensaje de error -->
+            <div *ngIf="error"
+                class="mb-8 flex items-center gap-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-4 text-sm">
+                <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+                <span class="font-medium">{{ error }}</span>
+            </div>
+
+            <!-- Mensaje de éxito -->
+            <div *ngIf="successMessage"
+                class="mb-8 flex flex-col items-center gap-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-2xl p-8 text-center">
+                <div class="h-16 w-16 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-2">¡Solicitud Registrada!</h4>
+                    <p class="text-emerald-200/80">{{ successMessage }}</p>
+                </div>
+                <button (click)="successMessage=''" class="mt-4 px-6 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 rounded-full transition font-semibold">
+                    Hacer otra reserva
+                </button>
+            </div>
+
+            <form *ngIf="!successMessage" (ngSubmit)="onSubmit()" #reservaForm="ngForm" class="space-y-6">
+
+                <!-- Fecha y Personas (Grid) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Fecha de Visita -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Fecha deseada</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <input type="date" name="fecha_visita" [(ngModel)]="fecha_visita" required [min]="hoy"
+                                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition [color-scheme:dark]">
+                        </div>
+                    </div>
+
+                    <!-- Numero Personas -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Asistentes</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="number" name="num_personas" [(ngModel)]="num_personas" min="1" required
+                                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comentarios -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Comentarios / Peticiones Especiales (Opcional)</label>
+                    <div class="relative">
+                        <textarea name="comentarios" [(ngModel)]="comentarios" rows="4"
+                            class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 px-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition resize-none"
+                            placeholder="Ej. Grupo de estudiantes, personas con movilidad reducida..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Botón de Envío -->
+                <button type="submit" [disabled]="cargando"
+                    class="w-full flex justify-center items-center gap-3 py-4 px-4 border border-transparent rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] text-lg font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 focus:outline-none transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none mt-8">
+                    
+                    <svg *ngIf="cargando" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+
+                    {{ cargando ? 'Enviando solicitud...' : 'Confirmar Reserva' }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

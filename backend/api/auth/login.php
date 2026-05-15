@@ -52,7 +52,7 @@ if (strlen($password) < 6) {
 $pdo = getConnection();
 
 $stmt = $pdo->prepare("
-    SELECT id, nombre, email, password, rol, activo
+    SELECT id, nombre, email, password, rol, activo, email_verificado
     FROM usuarios
     WHERE email = :email
     LIMIT 1
@@ -71,6 +71,13 @@ if (!$usuario) {
 if (!$usuario['activo']) {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Tu cuenta ha sido desactivada. Contacta con el administrador.']);
+    exit;
+}
+
+// Cuenta no verificada
+if (!$usuario['email_verificado']) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Por favor, verifica tu correo electrónico antes de iniciar sesión. Revisa tu bandeja de entrada.']);
     exit;
 }
 
