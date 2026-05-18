@@ -26,7 +26,7 @@ export class Login {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   onSubmit(): void {
     this.error = '';
@@ -79,12 +79,7 @@ export class Login {
         this.cargando = false;
         this.cdr.detectChanges();
         if (res.success && res.user) {
-          // Redirigir según el rol
-          if (res.user.rol === 'admin') {
-            this.router.navigate(['/admin']);
-          } else {
-            this.router.navigate(['/']); // Redirigir al inicio
-          }
+          this.router.navigate(['/']);
         }
       },
       error: (err) => {
