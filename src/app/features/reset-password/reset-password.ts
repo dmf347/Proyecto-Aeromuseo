@@ -1,20 +1,20 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './reset-password.html',
-  standalone: true
+  standalone: true,
 })
 export class ResetPassword implements OnInit {
   token = '';
   password = '';
   confirmPassword = '';
-  
+
   cargando = false;
   error = '';
   successMessage = '';
@@ -23,7 +23,7 @@ export class ResetPassword implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class ResetPassword implements OnInit {
         this.cargando = false;
         this.error = err.error?.message || 'Error al restablecer la contraseña.';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 }

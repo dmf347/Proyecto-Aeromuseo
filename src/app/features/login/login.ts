@@ -1,19 +1,19 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   email = '';
   password = '';
-  nombre = '';   // solo para registro
+  nombre = ''; // solo para registro
 
   cargando = false;
   error = '';
@@ -25,8 +25,8 @@ export class Login {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   onSubmit(): void {
     this.error = '';
@@ -62,7 +62,7 @@ export class Login {
         this.cargando = false;
         this.error = err.error?.message || 'Error al procesar la solicitud';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -92,7 +92,7 @@ export class Login {
         // El backend devuelve el mensaje de error en el body
         this.error = err.error?.message || 'Error al conectar con el servidor';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -108,7 +108,9 @@ export class Login {
       next: (res) => {
         this.cargando = false;
         if (res.success) {
-          this.successMessage = res.message || 'Cuenta creada correctamente. Revisa tu bandeja de entrada para verificar el email.';
+          this.successMessage =
+            res.message ||
+            'Cuenta creada correctamente. Revisa tu bandeja de entrada para verificar el email.';
           this.modoRegistro = false;
           this.password = '';
         }
@@ -118,7 +120,7 @@ export class Login {
         this.cargando = false;
         this.error = err.error?.message || 'Error al registrar la cuenta';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 

@@ -1,206 +1,301 @@
 <div class="bg-slate-50 text-slate-800 antialiased pb-20">
+  <!-- Navbar / Header -->
+  <header
+    class="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300"
+  >
+    <div class="container mx-auto flex justify-between items-center px-6 py-4">
+      <div class="flex items-center space-x-4">
+        <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
+            alt="Logo Aeromuseo"
+            class="h-10 w-auto rounded-md"
+          />
+        </div>
+        <span
+          class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
+        >
+          Aeromuseo
+        </span>
+      </div>
 
-    <!-- Navbar / Header -->
-    <header
-        class="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300">
-        <div class="container mx-auto flex justify-between items-center px-6 py-4">
-            <div class="flex items-center space-x-4">
-                <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
-                        alt="Logo Aeromuseo" class="h-10 w-auto rounded-md">
-                </div>
-                <span
-                    class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
-                    Aeromuseo
-                </span>
+      <nav class="hidden md:flex items-center space-x-8">
+        <a
+          routerLink="/"
+          class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200"
+          >Inicio</a
+        >
+        <a
+          routerLink="/museo"
+          class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200"
+          >El Museo</a
+        >
+        <a
+          routerLink="/eventos"
+          class="text-white hover:text-cyan-400 font-medium transition duration-200 border-b-2 border-cyan-400 pb-1"
+          >Eventos</a
+        >
+        @if (authService.usuario$ | async; as user) {
+          @if (user.rol === 'admin') {
+            <a
+              routerLink="/admin"
+              class="text-orange-400 hover:text-orange-300 font-bold transition duration-200"
+              >Admin Panel</a
+            >
+          }
+        }
+      </nav>
+
+      <div class="hidden md:flex items-center space-x-4">
+        @if (authService.usuario$ | async; as user) {
+          <div
+            class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-4 pr-2 py-1 backdrop-blur-md"
+          >
+            <div class="flex flex-col text-right">
+              <span class="text-white text-sm font-semibold leading-tight">{{ user.nombre }}</span>
+              <span class="text-cyan-400 text-xs">{{
+                user.rol === 'admin' ? 'Administrador' : 'Visitante'
+              }}</span>
             </div>
-
-            <nav class="hidden md:flex items-center space-x-8">
-                <a routerLink="/" class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200">Inicio</a>
-                <a routerLink="/museo" class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200">El Museo</a>
-                <a routerLink="/eventos" class="text-white hover:text-cyan-400 font-medium transition duration-200 border-b-2 border-cyan-400 pb-1">Eventos</a>
-                <ng-container *ngIf="authService.usuario$ | async as user">
-                    <a *ngIf="user.rol === 'admin'" routerLink="/admin" class="text-orange-400 hover:text-orange-300 font-bold transition duration-200">Admin Panel</a>
-                </ng-container>
-            </nav>
-
-            <div class="hidden md:flex items-center space-x-4">
-                <ng-container *ngIf="authService.usuario$ | async as user; else noAuth">
-                    <div
-                        class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-4 pr-2 py-1 backdrop-blur-md">
-                        <div class="flex flex-col text-right">
-                            <span class="text-white text-sm font-semibold leading-tight">{{ user.nombre }}</span>
-                            <span class="text-cyan-400 text-xs">{{ user.rol === 'admin' ? 'Administrador' : 'Visitante'
-                                }}</span>
-                        </div>
-                        <div
-                            class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold shadow-inner">
-                            {{ user.nombre.charAt(0).toUpperCase() }}
-                        </div>
-                        <button (click)="authService.logout()"
-                            class="ml-2 p-2 hover:bg-white/10 rounded-full transition text-slate-300 hover:text-red-400"
-                            title="Cerrar sesión">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </ng-container>
-                <ng-template #noAuth>
-                    <a routerLink="/login"
-                        class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5 transition-all duration-200">
-                        Iniciar Sesión
-                    </a>
-                </ng-template>
+            <div
+              class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold shadow-inner"
+            >
+              {{ user.nombre.charAt(0).toUpperCase() }}
             </div>
-        </div>
-    </header>
+            <button
+              (click)="authService.logout()"
+              class="ml-2 p-2 hover:bg-white/10 rounded-full transition text-slate-300 hover:text-red-400"
+              title="Cerrar sesión"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        } @else {
+          <a
+            routerLink="/login"
+            class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5 transition-all duration-200"
+          >
+            Iniciar Sesión
+          </a>
+        }
+      </div>
+    </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 bg-blue-900 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Airshow.jpg"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-950/90 to-slate-900/80"></div>
-        </div>
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 bg-blue-900 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/2/29/Airshow.jpg"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-950/90 to-slate-900/80"></div>
+    </div>
 
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl mt-10">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6">Agenda de Actividades</h1>
-            <p class="text-xl text-blue-200">Vive la aviación más allá de los pasillos. Eventos únicos, exposiciones
-                temporales y visitas exclusivas guiadas por expertos.</p>
-        </div>
-    </section>
+    <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl mt-10">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6">Agenda de Actividades</h1>
+      <p class="text-xl text-blue-200">
+        Vive la aviación más allá de los pasillos. Eventos únicos, exposiciones temporales y visitas
+        exclusivas guiadas por expertos.
+      </p>
+    </div>
+  </section>
 
-    <!-- Visitas Guiadas Callout -->
-    <section class="container mx-auto px-6 -mt-10 relative z-20">
+  <!-- Visitas Guiadas Callout -->
+  <section class="container mx-auto px-6 -mt-10 relative z-20">
+    <div
+      class="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-8"
+    >
+      <div class="md:w-2/3">
+        <span class="text-blue-600 font-bold tracking-wider text-sm uppercase mb-2 block"
+          >Imprescindible</span
+        >
+        <h2 class="text-3xl font-bold text-slate-800 mb-4">Visitas Guiadas por Voluntarios</h2>
+        <p class="text-slate-600 text-lg">
+          Descubre los secretos mejor guardados del museo de la mano de expilotos y mecánicos. Para
+          unirte a una visita guiada, es necesario registrar tu plaza a través de nuestro portal.
+        </p>
+      </div>
+      <div class="md:w-1/3 text-center md:text-right">
+        <a
+          routerLink="/reservas"
+          class="inline-block w-full md:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg transition-transform transform hover:-translate-y-1"
+        >
+          Acceder a Reservas
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eventos -->
+  <section class="py-24 relative bg-slate-50">
+    <div class="container mx-auto px-6">
+      <div class="flex justify-between items-end mb-12 border-b border-slate-200 pb-6">
+        <h2 class="text-3xl font-bold text-slate-900">Próximos Eventos</h2>
+        <span class="text-slate-500">Acceso Libre</span>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Evento 1 -->
         <div
-            class="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="md:w-2/3">
-                <span class="text-blue-600 font-bold tracking-wider text-sm uppercase mb-2 block">Imprescindible</span>
-                <h2 class="text-3xl font-bold text-slate-800 mb-4">Visitas Guiadas por Voluntarios</h2>
-                <p class="text-slate-600 text-lg">Descubre los secretos mejor guardados del museo de la mano de
-                    expilotos y
-                    mecánicos. Para unirte a una visita guiada, es necesario registrar tu plaza a través de nuestro
-                    portal.</p>
+          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
+        >
+          <div class="h-56 overflow-hidden">
+            <img
+              src="https://aeromuseo.org/wp-content/uploads/2025/06/IMG20250531120239-511x400-optimized.jpg"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+          </div>
+          <div class="p-8">
+            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span>15 Mayo 2026</span>
             </div>
-            <div class="md:w-1/3 text-center md:text-right">
-                <a routerLink="/reservas"
-                    class="inline-block w-full md:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg transition-transform transform hover:-translate-y-1">
-                    Acceder a Reservas
-                </a>
-            </div>
+            <h4 class="text-2xl font-bold mb-3 text-slate-800">Reunión de Motoristas</h4>
+            <p class="text-slate-500 leading-relaxed mb-6">
+              Exhibición de motos clásicas junto a nuestros aviones en la explanada principal. Un
+              evento solidario espectacular.
+            </p>
+            <a
+              routerLink="/login"
+              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
+            >
+              Reservar entrada gratis
+              <svg
+                class="w-4 h-4 ml-1 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </a>
+          </div>
         </div>
-    </section>
 
-    <!-- Eventos -->
-    <section class="py-24 relative bg-slate-50">
-        <div class="container mx-auto px-6">
-            <div class="flex justify-between items-end mb-12 border-b border-slate-200 pb-6">
-                <h2 class="text-3xl font-bold text-slate-900">Próximos Eventos</h2>
-                <span class="text-slate-500">Acceso Libre</span>
+        <!-- Evento 2 -->
+        <div
+          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
+        >
+          <div class="h-56 overflow-hidden relative">
+            <!-- Badge -->
+            <div
+              class="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10"
+            >
+              Popular
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Evento 1 -->
-                <div
-                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://aeromuseo.org/wp-content/uploads/2025/06/IMG20250531120239-511x400-optimized.jpg"
-                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span>15 Mayo 2026</span>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-3 text-slate-800">Reunión de Motoristas</h4>
-                        <p class="text-slate-500 leading-relaxed mb-6">Exhibición de motos clásicas junto a nuestros
-                            aviones en la
-                            explanada principal. Un evento solidario espectacular.</p>
-                        <a routerLink="/login"
-                            class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition">
-                            Reservar entrada gratis
-                            <svg class="w-4 h-4 ml-1 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Evento 2 -->
-                <div
-                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group">
-                    <div class="h-56 overflow-hidden relative">
-                        <!-- Badge -->
-                        <div
-                            class="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
-                            Popular</div>
-                        <img src="https://s1.ppllstatics.com/diariosur/www/multimedia/2025/11/26/cartel%20(1).jpeg"
-                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span>21 Junio 2026</span>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-3 text-slate-800">Visita de Superhéroes</h4>
-                        <p class="text-slate-500 leading-relaxed mb-6">Heroes con capas y trajes se dejan ver por el
-                            museo donando
-                            sonrisas. Genial para traer a los más pequeños.</p>
-                        <a routerLink="/login"
-                            class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition">
-                            Reservar entrada gratis
-                            <svg class="w-4 h-4 ml-1 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Evento 3 -->
-                <div
-                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://ladiversiva.com/wp-content/uploads/2024/01/501_2024_Museo-Aeronautico-Malaga-1-1-1.jpg"
-                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span>4 Mayo 2026</span>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-3 text-slate-800">Día de Star Wars</h4>
-                        <p class="text-slate-500 leading-relaxed mb-6">La legión 501 toma el control del museo. ¡Fotos
-                            con la
-                            Alianza y el Imperio entre las aeronaves!</p>
-                        <a routerLink="/login"
-                            class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition">
-                            Reservar entrada gratis
-                            <svg class="w-4 h-4 ml-1 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+            <img
+              src="https://s1.ppllstatics.com/diariosur/www/multimedia/2025/11/26/cartel%20(1).jpeg"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+          </div>
+          <div class="p-8">
+            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span>21 Junio 2026</span>
             </div>
+            <h4 class="text-2xl font-bold mb-3 text-slate-800">Visita de Superhéroes</h4>
+            <p class="text-slate-500 leading-relaxed mb-6">
+              Heroes con capas y trajes se dejan ver por el museo donando sonrisas. Genial para
+              traer a los más pequeños.
+            </p>
+            <a
+              routerLink="/login"
+              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
+            >
+              Reservar entrada gratis
+              <svg
+                class="w-4 h-4 ml-1 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </a>
+          </div>
         </div>
-    </section>
 
+        <!-- Evento 3 -->
+        <div
+          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
+        >
+          <div class="h-56 overflow-hidden">
+            <img
+              src="https://ladiversiva.com/wp-content/uploads/2024/01/501_2024_Museo-Aeronautico-Malaga-1-1-1.jpg"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+          </div>
+          <div class="p-8">
+            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span>4 Mayo 2026</span>
+            </div>
+            <h4 class="text-2xl font-bold mb-3 text-slate-800">Día de Star Wars</h4>
+            <p class="text-slate-500 leading-relaxed mb-6">
+              La legión 501 toma el control del museo. ¡Fotos con la Alianza y el Imperio entre las
+              aeronaves!
+            </p>
+            <a
+              routerLink="/login"
+              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
+            >
+              Reservar entrada gratis
+              <svg
+                class="w-4 h-4 ml-1 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

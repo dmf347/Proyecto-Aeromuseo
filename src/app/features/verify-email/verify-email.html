@@ -1,64 +1,122 @@
 <div class="bg-slate-900 min-h-screen flex text-slate-100 antialiased relative overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute inset-0 z-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
-            class="w-full h-full object-cover opacity-20 mix-blend-luminosity">
-        <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-slate-900 to-cyan-900/50"></div>
-    </div>
+  <!-- Background Elements -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
+      class="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-slate-900 to-cyan-900/50"
+    ></div>
+  </div>
 
-    <!-- Decorative Blurs -->
-    <div class="absolute top-20 right-20 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl z-0"></div>
-    <div class="absolute bottom-10 left-10 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl z-0"></div>
+  <!-- Decorative Blurs -->
+  <div class="absolute top-20 right-20 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl z-0"></div>
+  <div class="absolute bottom-10 left-10 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl z-0"></div>
 
-    <div class="relative z-10 w-full max-w-lg mx-auto flex flex-col justify-center px-6 my-20">
-        
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-10 md:p-14 text-center">
-            
-            <!-- Logo -->
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
-                alt="Logo" class="w-20 mx-auto rounded-2xl mb-8 shadow-xl">
+  <div class="relative z-10 w-full max-w-lg mx-auto flex flex-col justify-center px-6 my-20">
+    <div
+      class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-10 md:p-14 text-center"
+    >
+      <!-- Logo -->
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
+        alt="Logo"
+        class="w-20 mx-auto rounded-2xl mb-8 shadow-xl"
+      />
 
-            <h2 class="text-3xl font-bold mb-4">Verificación de Cuenta</h2>
+      <h2 class="text-3xl font-bold mb-4">Verificación de Cuenta</h2>
 
-            <!-- Estado de carga -->
-            <div *ngIf="cargando" class="flex flex-col items-center justify-center my-8">
-                <svg class="animate-spin h-10 w-10 text-cyan-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                </svg>
-                <p class="text-slate-400">{{ message }}</p>
-            </div>
-
-            <!-- Resultado -->
-            <div *ngIf="!cargando" class="my-6">
-                <!-- Ícono éxito -->
-                <div *ngIf="success" class="mx-auto w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 border border-emerald-500/30">
-                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-                
-                <!-- Ícono error -->
-                <div *ngIf="!success" class="mx-auto w-16 h-16 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mb-6 border border-red-500/30">
-                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </div>
-
-                <h3 *ngIf="success" class="text-xl font-medium text-white mb-2">¡Hola{{ nombre ? ', ' + nombre : '' }}!</h3>
-                <p class="text-slate-300 mb-8" [ngClass]="{'text-red-300': !success, 'text-slate-300': success}">
-                    {{ message }}
-                </p>
-
-                <!-- Botones de acción -->
-                <a *ngIf="success" routerLink="/login" class="inline-flex justify-center items-center gap-2 py-3 px-8 border border-transparent rounded-xl shadow-lg shadow-cyan-500/20 text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 transition-all">
-                    Ir a Iniciar Sesión
-                </a>
-
-                <a *ngIf="!success" routerLink="/" class="inline-flex justify-center items-center gap-2 py-3 px-8 border border-white/10 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-all">
-                    Volver al Inicio
-                </a>
-            </div>
+      <!-- Estado de carga -->
+      @if (cargando) {
+        <div class="flex flex-col items-center justify-center my-8">
+          <svg
+            class="animate-spin h-10 w-10 text-cyan-500 mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+          <p class="text-slate-400">{{ message }}</p>
         </div>
+      }
+
+      <!-- Resultado -->
+      @if (!cargando) {
+        <div class="my-6">
+          <!-- Ícono éxito -->
+          @if (success) {
+            <div
+              class="mx-auto w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 border border-emerald-500/30"
+            >
+              <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          }
+          <!-- Ícono error -->
+          @if (!success) {
+            <div
+              class="mx-auto w-16 h-16 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mb-6 border border-red-500/30"
+            >
+              <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          }
+          @if (success) {
+            <h3 class="text-xl font-medium text-white mb-2">
+              ¡Hola{{ nombre ? ', ' + nombre : '' }}!
+            </h3>
+          }
+          <p
+            class="text-slate-300 mb-8"
+            [ngClass]="{ 'text-red-300': !success, 'text-slate-300': success }"
+          >
+            {{ message }}
+          </p>
+          <!-- Botones de acción -->
+          @if (success) {
+            <a
+              routerLink="/login"
+              class="inline-flex justify-center items-center gap-2 py-3 px-8 border border-transparent rounded-xl shadow-lg shadow-cyan-500/20 text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 transition-all"
+            >
+              Ir a Iniciar Sesión
+            </a>
+          }
+          @if (!success) {
+            <a
+              routerLink="/"
+              class="inline-flex justify-center items-center gap-2 py-3 px-8 border border-white/10 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-all"
+            >
+              Volver al Inicio
+            </a>
+          }
+        </div>
+      }
     </div>
+  </div>
 </div>

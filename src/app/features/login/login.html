@@ -1,170 +1,288 @@
 <div class="bg-slate-900 min-h-screen flex text-slate-100 antialiased relative overflow-hidden">
+  <!-- Background Elements -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
+      class="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-slate-900 to-cyan-900/50"
+    ></div>
+  </div>
 
-    <!-- Background Elements -->
-    <div class="absolute inset-0 z-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
-            class="w-full h-full object-cover opacity-20 mix-blend-luminosity">
-        <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-slate-900 to-cyan-900/50"></div>
-    </div>
+  <!-- Decorative Blurs -->
+  <div class="absolute top-20 right-20 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl z-0"></div>
+  <div class="absolute bottom-10 left-10 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl z-0"></div>
 
-    <!-- Decorative Blurs -->
-    <div class="absolute top-20 right-20 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl z-0"></div>
-    <div class="absolute bottom-10 left-10 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl z-0"></div>
-
-    <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col justify-center px-6">
-
-        <!-- Header minimal -->
-        <div class="absolute top-6 left-6 md:top-10 md:left-10">
-            <a routerLink="/" class="flex items-center text-slate-300 hover:text-white transition group">
-                <div class="bg-white/10 p-2 rounded-full mr-3 backdrop-blur-md group-hover:bg-white/20 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                </div>
-                <span class="font-medium">Volver a inicio</span>
-            </a>
-        </div>
-
-        <!-- Login/Register Container -->
+  <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col justify-center px-6">
+    <!-- Header minimal -->
+    <div class="absolute top-6 left-6 md:top-10 md:left-10">
+      <a routerLink="/" class="flex items-center text-slate-300 hover:text-white transition group">
         <div
-            class="flex flex-col md:flex-row bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden self-center w-full my-20">
-
-            <!-- Branding Panel -->
-            <div
-                class="w-full md:w-5/12 hidden md:flex flex-col justify-center items-center p-12 bg-gradient-to-b from-blue-600/20 to-blue-900/40 border-r border-white/5">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
-                    alt="Logo" class="w-24 rounded-2xl mb-8 shadow-xl">
-                <h2 class="text-3xl font-bold text-center mb-4">Portal de Gestión</h2>
-                <p class="text-slate-400 text-center leading-relaxed">
-                    Inicia sesión para reservar visitas guiadas (Visitantes) o administrar la plataforma y sus eventos
-                    (Admins).
-                </p>
-            </div>
-
-            <!-- Form Panel -->
-            <div class="w-full md:w-7/12 p-10 md:p-14">
-
-                <!-- Título dinámico -->
-                <h3 class="text-3xl font-bold mb-2">
-                    {{ modoRecuperar ? 'Recuperar Contraseña' : (modoRegistro ? 'Crear cuenta' : 'Bienvenido de nuevo') }}
-                </h3>
-                <p class="text-slate-400 mb-8">
-                    {{ modoRecuperar ? 'Ingresa tu correo para recibir un enlace de recuperación' : (modoRegistro ? 'Rellena los datos para registrarte' : 'Ingresa tus credenciales para continuar') }}
-                </p>
-
-                <!-- Mensaje de error -->
-                <div *ngIf="error"
-                    class="mb-6 flex items-center gap-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-sm">
-                    <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                    </svg>
-                    {{ error }}
-                </div>
-
-                <!-- Mensaje de éxito -->
-                <div *ngIf="successMessage"
-                    class="mb-6 flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl px-4 py-3 text-sm">
-                    <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    {{ successMessage }}
-                </div>
-
-                <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="space-y-6">
-
-                    <!-- Nombre (solo en registro) -->
-                    <div *ngIf="modoRegistro && !modoRecuperar">
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Nombre completo</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                            <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required
-                                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
-                                placeholder="Tu nombre">
-                        </div>
-                    </div>
-
-                    <!-- Email -->
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Correo Electrónico</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <input type="email" id="email" name="email" [(ngModel)]="email" required
-                                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
-                                placeholder="tu@email.com">
-                        </div>
-                    </div>
-
-                    <!-- Contraseña (ocultar en modo recuperar) -->
-                    <div *ngIf="!modoRecuperar">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="block text-sm font-medium text-slate-300">Contraseña</label>
-                            <button type="button" *ngIf="!modoRegistro" (click)="toggleRecuperar()"
-                                class="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition">¿Olvidaste tu
-                                contraseña?</button>
-                        </div>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <input type="password" id="password" name="password" [(ngModel)]="password" required
-                                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
-                                placeholder="••••••••">
-                        </div>
-                    </div>
-
-                    <!-- Botón submit -->
-                    <button type="submit" [disabled]="cargando"
-                        class="w-full flex justify-center items-center gap-3 py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-cyan-500/20 text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-slate-900 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
-
-                        <!-- Spinner de carga -->
-                        <svg *ngIf="cargando" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                        </svg>
-
-                        {{ cargando ? 'Procesando...' : (modoRecuperar ? 'Enviar enlace de recuperación' : (modoRegistro ? 'Crear cuenta' : 'Acceder')) }}
-                    </button>
-                </form>
-
-                <!-- Toggle login / registro -->
-                <p class="mt-8 text-center text-sm text-slate-400">
-                    <ng-container *ngIf="modoRecuperar; else normalToggle">
-                        <button type="button" (click)="toggleModo()"
-                            class="font-medium text-cyan-400 hover:text-cyan-300 transition ml-1">
-                            Volver al inicio de sesión
-                        </button>
-                    </ng-container>
-                    <ng-template #normalToggle>
-                        {{ modoRegistro ? '¿Ya tienes cuenta?' : '¿Aún no te has registrado?' }}
-                        <button type="button" (click)="toggleModo()"
-                            class="font-medium text-cyan-400 hover:text-cyan-300 transition ml-1">
-                            {{ modoRegistro ? 'Iniciar sesión' : 'Crear cuenta' }}
-                        </button>
-                    </ng-template>
-                </p>
-            </div>
+          class="bg-white/10 p-2 rounded-full mr-3 backdrop-blur-md group-hover:bg-white/20 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
         </div>
+        <span class="font-medium">Volver a inicio</span>
+      </a>
     </div>
+
+    <!-- Login/Register Container -->
+    <div
+      class="flex flex-col md:flex-row bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden self-center w-full my-20"
+    >
+      <!-- Branding Panel -->
+      <div
+        class="w-full md:w-5/12 hidden md:flex flex-col justify-center items-center p-12 bg-gradient-to-b from-blue-600/20 to-blue-900/40 border-r border-white/5"
+      >
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
+          alt="Logo"
+          class="w-24 rounded-2xl mb-8 shadow-xl"
+        />
+        <h2 class="text-3xl font-bold text-center mb-4">Portal de Gestión</h2>
+        <p class="text-slate-400 text-center leading-relaxed">
+          Inicia sesión para reservar visitas guiadas (Visitantes) o administrar la plataforma y sus
+          eventos (Admins).
+        </p>
+      </div>
+
+      <!-- Form Panel -->
+      <div class="w-full md:w-7/12 p-10 md:p-14">
+        <!-- Título dinámico -->
+        <h3 class="text-3xl font-bold mb-2">
+          {{
+            modoRecuperar
+              ? 'Recuperar Contraseña'
+              : modoRegistro
+                ? 'Crear cuenta'
+                : 'Bienvenido de nuevo'
+          }}
+        </h3>
+        <p class="text-slate-400 mb-8">
+          {{
+            modoRecuperar
+              ? 'Ingresa tu correo para recibir un enlace de recuperación'
+              : modoRegistro
+                ? 'Rellena los datos para registrarte'
+                : 'Ingresa tus credenciales para continuar'
+          }}
+        </p>
+
+        <!-- Mensaje de error -->
+        @if (error) {
+          <div
+            class="mb-6 flex items-center gap-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-sm"
+          >
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+              />
+            </svg>
+            {{ error }}
+          </div>
+        }
+
+        <!-- Mensaje de éxito -->
+        @if (successMessage) {
+          <div
+            class="mb-6 flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl px-4 py-3 text-sm"
+          >
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            {{ successMessage }}
+          </div>
+        }
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="space-y-6">
+          <!-- Nombre (solo en registro) -->
+          @if (modoRegistro && !modoRecuperar) {
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-2">Nombre completo</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg
+                    class="h-5 w-5 text-slate-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  [(ngModel)]="nombre"
+                  required
+                  class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+                  placeholder="Tu nombre"
+                />
+              </div>
+            </div>
+          }
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Correo Electrónico</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg
+                  class="h-5 w-5 text-slate-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                required
+                class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+                placeholder="tu@email.com"
+              />
+            </div>
+          </div>
+
+          <!-- Contraseña (ocultar en modo recuperar) -->
+          @if (!modoRecuperar) {
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="block text-sm font-medium text-slate-300">Contraseña</label>
+                @if (!modoRegistro) {
+                  <button
+                    type="button"
+                    (click)="toggleRecuperar()"
+                    class="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </button>
+                }
+              </div>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg
+                    class="h-5 w-5 text-slate-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  [(ngModel)]="password"
+                  required
+                  class="w-full bg-black/20 border border-slate-700/50 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+          }
+
+          <!-- Botón submit -->
+          <button
+            type="submit"
+            [disabled]="cargando"
+            class="w-full flex justify-center items-center gap-3 py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-cyan-500/20 text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-slate-900 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            <!-- Spinner de carga -->
+            @if (cargando) {
+              <svg
+                class="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                ></path>
+              </svg>
+            }
+
+            {{
+              cargando
+                ? 'Procesando...'
+                : modoRecuperar
+                  ? 'Enviar enlace de recuperación'
+                  : modoRegistro
+                    ? 'Crear cuenta'
+                    : 'Acceder'
+            }}
+          </button>
+        </form>
+
+        <!-- Toggle login / registro -->
+        <p class="mt-8 text-center text-sm text-slate-400">
+          @if (modoRecuperar) {
+            <button
+              type="button"
+              (click)="toggleModo()"
+              class="font-medium text-cyan-400 hover:text-cyan-300 transition ml-1"
+            >
+              Volver al inicio de sesión
+            </button>
+          } @else {
+            {{ modoRegistro ? '¿Ya tienes cuenta?' : '¿Aún no te has registrado?' }}
+            <button
+              type="button"
+              (click)="toggleModo()"
+              class="font-medium text-cyan-400 hover:text-cyan-300 transition ml-1"
+            >
+              {{ modoRegistro ? 'Iniciar sesión' : 'Crear cuenta' }}
+            </button>
+          }
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
