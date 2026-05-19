@@ -142,160 +142,105 @@
         <span class="text-slate-500">Acceso Libre</span>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Evento 1 -->
-        <div
-          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
-        >
-          <div class="h-56 overflow-hidden">
-            <img
-              src="https://aeromuseo.org/wp-content/uploads/2025/06/IMG20250531120239-511x400-optimized.jpg"
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-          </div>
-          <div class="p-8">
-            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                ></path>
-              </svg>
-              <span>15 Mayo 2026</span>
-            </div>
-            <h4 class="text-2xl font-bold mb-3 text-slate-800">Reunión de Motoristas</h4>
-            <p class="text-slate-500 leading-relaxed mb-6">
-              Exhibición de motos clásicas junto a nuestros aviones en la explanada principal. Un
-              evento solidario espectacular.
-            </p>
-            <a
-              routerLink="/login"
-              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
-            >
-              Reservar entrada gratis
-              <svg
-                class="w-4 h-4 ml-1 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-            </a>
-          </div>
+      <!-- Estado: Cargando -->
+      @if (cargando) {
+        <div class="flex justify-center items-center py-24">
+          <div class="animate-spin rounded-full h-12 w-12 border-4 border-cyan-500 border-t-transparent"></div>
+          <span class="ml-4 text-slate-500 text-lg">Cargando eventos...</span>
         </div>
+      }
 
-        <!-- Evento 2 -->
-        <div
-          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
-        >
-          <div class="h-56 overflow-hidden relative">
-            <!-- Badge -->
-            <div
-              class="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10"
-            >
-              Popular
-            </div>
-            <img
-              src="https://s1.ppllstatics.com/diariosur/www/multimedia/2025/11/26/cartel%20(1).jpeg"
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-          </div>
-          <div class="p-8">
-            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                ></path>
-              </svg>
-              <span>21 Junio 2026</span>
-            </div>
-            <h4 class="text-2xl font-bold mb-3 text-slate-800">Visita de Superhéroes</h4>
-            <p class="text-slate-500 leading-relaxed mb-6">
-              Heroes con capas y trajes se dejan ver por el museo donando sonrisas. Genial para
-              traer a los más pequeños.
-            </p>
-            <a
-              routerLink="/login"
-              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
-            >
-              Reservar entrada gratis
-              <svg
-                class="w-4 h-4 ml-1 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-            </a>
-          </div>
+      <!-- Estado: Error -->
+      @if (error) {
+        <div class="text-center py-24">
+          <svg class="w-16 h-16 text-red-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z">
+            </path>
+          </svg>
+          <p class="text-slate-500 text-lg mb-6">No se pudieron cargar los eventos.</p>
+          <button
+            (click)="cargarEventos()"
+            class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition"
+          >
+            Reintentar
+          </button>
         </div>
+      }
 
-        <!-- Evento 3 -->
-        <div
-          class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
-        >
-          <div class="h-56 overflow-hidden">
-            <img
-              src="https://ladiversiva.com/wp-content/uploads/2024/01/501_2024_Museo-Aeronautico-Malaga-1-1-1.jpg"
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-          </div>
-          <div class="p-8">
-            <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                ></path>
-              </svg>
-              <span>4 Mayo 2026</span>
-            </div>
-            <h4 class="text-2xl font-bold mb-3 text-slate-800">Día de Star Wars</h4>
-            <p class="text-slate-500 leading-relaxed mb-6">
-              La legión 501 toma el control del museo. ¡Fotos con la Alianza y el Imperio entre las
-              aeronaves!
-            </p>
-            <a
-              routerLink="/login"
-              class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
-            >
-              Reservar entrada gratis
-              <svg
-                class="w-4 h-4 ml-1 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-            </a>
-          </div>
+      <!-- Estado: Sin eventos activos -->
+      @if (!cargando && !error && eventos.length === 0) {
+        <div class="text-center py-24">
+          <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+            </path>
+          </svg>
+          <p class="text-slate-400 text-xl">No hay eventos programados próximamente.</p>
+          <p class="text-slate-400 text-sm mt-2">Vuelve a consultar pronto.</p>
         </div>
-      </div>
+      }
+
+      <!-- Tarjetas dinámicas -->
+      @if (!cargando && !error && eventos.length > 0) {
+        <div class="grid md:grid-cols-3 gap-8">
+          @for (evento of eventos; track evento.id) {
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group">
+              <div class="h-56 overflow-hidden">
+                <img
+                  [src]="evento.imagen_url || 'https://aeromuseo.org/wp-content/uploads/2022/03/243772071_1201647757013187_4059609908834378484_n-optimized.jpeg'"
+                  [alt]="evento.titulo"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div class="p-8">
+                <!-- Fecha -->
+                <div class="flex items-center space-x-2 text-sm text-cyan-600 font-bold mb-3">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                  <span>{{ formatearFecha(evento.fecha) }}</span>
+                  @if (evento.hora) {
+                    <span class="text-slate-400 font-normal">· {{ evento.hora }}</span>
+                  }
+                </div>
+
+                <!-- Título y descripción -->
+                <h4 class="text-2xl font-bold mb-3 text-slate-800">{{ evento.titulo }}</h4>
+                <p class="text-slate-500 leading-relaxed mb-4">{{ evento.descripcion }}</p>
+
+                <!-- Lugar -->
+                @if (evento.lugar) {
+                  <p class="text-sm text-slate-400 mb-5 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                      </path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+                      </path>
+                    </svg>
+                    {{ evento.lugar }}
+                  </p>
+                }
+
+                <!-- CTA -->
+                <a
+                  routerLink="/reservas"
+                  class="text-blue-600 font-semibold hover:text-blue-800 flex items-center transition"
+                >
+                  Reservar entrada gratis
+                  <svg class="w-4 h-4 ml-1 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          }
+        </div>
+      }
     </div>
   </section>
 </div>
