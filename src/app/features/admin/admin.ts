@@ -13,7 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class Admin implements OnInit {
   activeTab: 'reservas' | 'eventos' = 'reservas';
-  
+
   reservas: ReservaAdmin[] = [];
   eventos: EventoAdmin[] = [];
 
@@ -25,7 +25,7 @@ export class Admin implements OnInit {
     private adminService: AdminService,
     public authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadReservas();
@@ -42,7 +42,7 @@ export class Admin implements OnInit {
 
   updateReserva(id: number, estado: 'aprobada' | 'rechazada') {
     this.adminService.updateReservaStatus(id, estado).subscribe(res => {
-      if(res.success) this.loadReservas();
+      if (res.success) this.loadReservas();
     });
   }
 
@@ -58,14 +58,14 @@ export class Admin implements OnInit {
   saveEvent() {
     if (this.currentEvent.id) {
       this.adminService.updateEvento(this.currentEvent).subscribe(res => {
-        if(res.success) {
+        if (res.success) {
           this.showEventForm = false;
           this.loadEventos();
         }
       });
     } else {
       this.adminService.createEvento(this.currentEvent).subscribe(res => {
-        if(res.success) {
+        if (res.success) {
           this.showEventForm = false;
           this.loadEventos();
         }
@@ -74,9 +74,9 @@ export class Admin implements OnInit {
   }
 
   deleteEvent(id: number | undefined) {
-    if(id && confirm('¿Eliminar evento?')) {
+    if (id && confirm('¿Eliminar evento?')) {
       this.adminService.deleteEvento(id).subscribe(res => {
-        if(res.success) this.loadEventos();
+        if (res.success) this.loadEventos();
       });
     }
   }

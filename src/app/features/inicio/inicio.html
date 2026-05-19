@@ -1,87 +1,60 @@
 <div class="bg-slate-50 text-slate-800 antialiased">
   <!-- Navbar / Header (Glassmorphism) -->
   <header
-    class="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300"
-  >
+    class="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300">
     <div class="container mx-auto flex justify-between items-center px-6 py-4">
       <div class="flex items-center space-x-4">
         <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
-          <img
-            src="https://raw.githubusercontent.com/dmf347/Proyecto-Aeromuseo/main/logo.png"
-            alt="Logo Aeromuseo"
-            class="h-10 w-auto rounded-md"
-          />
+          <img src="https://raw.githubusercontent.com/dmf347/Proyecto-Aeromuseo/main/logo.png" alt="Logo Aeromuseo"
+            class="h-10 w-auto rounded-md" />
         </div>
-        <span
-          class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
-        >
+        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
           Aeromuseo
         </span>
       </div>
 
       <nav class="hidden md:flex items-center space-x-8">
-        <a routerLink="/" class="text-white hover:text-cyan-400 font-medium transition duration-200"
-          >Inicio</a
-        >
-        <a
-          routerLink="/museo"
-          class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200"
-          >El Museo</a
-        >
-        <a
-          routerLink="/eventos"
-          class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200"
-          >Eventos</a
-        >
+        <a routerLink="/" class="text-white hover:text-cyan-400 font-medium transition duration-200">Inicio</a>
+        <a routerLink="/museo" class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200">El
+          Museo</a>
+        <a routerLink="/eventos"
+          class="text-slate-300 hover:text-cyan-400 font-medium transition duration-200">Eventos</a>
         @if (authService.usuario$ | async; as user) {
-          @if (user.rol === 'admin') {
-            <a
-              routerLink="/admin"
-              class="text-orange-400 hover:text-orange-300 font-bold transition duration-200"
-              >Admin Panel</a
-            >
-          }
+        @if (user.rol === 'admin') {
+        <a routerLink="/admin" class="text-orange-400 hover:text-orange-300 font-bold transition duration-200">Admin
+          Panel</a>
+        }
         }
       </nav>
 
       <div class="hidden md:flex items-center space-x-4">
         @if (authService.usuario$ | async; as user) {
-          <div
-            class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-4 pr-2 py-1 backdrop-blur-md"
-          >
-            <div class="flex flex-col text-right">
-              <span class="text-white text-sm font-semibold leading-tight">{{ user.nombre }}</span>
-              <span class="text-cyan-400 text-xs">{{
-                user.rol === 'admin' ? 'Administrador' : 'Visitante'
+        <div
+          class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-4 pr-2 py-1 backdrop-blur-md">
+          <div class="flex flex-col text-right">
+            <span class="text-white text-sm font-semibold leading-tight">{{ user.nombre }}</span>
+            <span class="text-cyan-400 text-xs">{{
+              user.rol === 'admin' ? 'Administrador' : 'Visitante'
               }}</span>
-            </div>
-            <div
-              class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold shadow-inner"
-            >
-              {{ user.nombre.charAt(0).toUpperCase() }}
-            </div>
-            <button
-              (click)="authService.logout()"
-              class="ml-2 p-2 hover:bg-white/10 rounded-full transition text-slate-300 hover:text-red-400"
-              title="Cerrar sesión"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                ></path>
-              </svg>
-            </button>
           </div>
+          <div
+            class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold shadow-inner">
+            {{ user.nombre.charAt(0).toUpperCase() }}
+          </div>
+          <button (click)="authService.logout()"
+            class="ml-2 p-2 hover:bg-white/10 rounded-full transition text-slate-300 hover:text-red-400"
+            title="Cerrar sesión">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </button>
+        </div>
         } @else {
-          <a
-            routerLink="/login"
-            class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5 transition-all duration-200"
-          >
-            Iniciar Sesión
-          </a>
+        <a routerLink="/login"
+          class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5 transition-all duration-200">
+          Iniciar Sesión
+        </a>
         }
       </div>
     </div>
@@ -91,52 +64,38 @@
   <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
     <!-- Background Image & Gradient Overlay -->
     <div class="absolute inset-0 z-0">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
-        alt="Fondo Aviación"
-        class="w-full h-full object-cover"
-      />
-      <div
-        class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-900/90"
-      ></div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Museo_Aeronautico_Malaga_-_Terminal_Historica.jpg"
+        alt="Fondo Aviación" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-900/90"></div>
     </div>
 
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
       <span
-        class="inline-block py-1 px-3 rounded-full bg-cyan-500/20 text-cyan-300 text-sm font-semibold tracking-wider mb-6 border border-cyan-500/30 uppercase"
-      >
+        class="inline-block py-1 px-3 rounded-full bg-cyan-500/20 text-cyan-300 text-sm font-semibold tracking-wider mb-6 border border-cyan-500/30 uppercase">
         Patrimonio Aeronáutico de Andalucía
       </span>
       <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-        El Cielo <br /><span
-          class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
-          >A Tu Alcance</span
-        >
+        El Cielo <br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">A Tu
+          Alcance</span>
       </h1>
       <p class="text-lg md:text-2xl text-slate-300 mb-10 font-light max-w-2xl mx-auto">
         Un viaje inmersivo por el pasado, presente y futuro de la aviación mundial en nuestra
         terminal histórica restaurada.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a
-          href="#exposiciones"
-          class="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-slate-100 transition shadow-xl transform hover:-translate-y-1"
-        >
+        <a href="#exposiciones"
+          class="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-slate-100 transition shadow-xl transform hover:-translate-y-1">
           Explorar el Museo
         </a>
-        <a
-          routerLink="/reservas"
-          class="w-full sm:w-auto px-8 py-4 bg-blue-600/20 text-white backdrop-blur-md border border-blue-500/50 rounded-full font-bold hover:bg-blue-600/40 transition transform hover:-translate-y-1"
-        >
+        <a routerLink="/reservas"
+          class="w-full sm:w-auto px-8 py-4 bg-blue-600/20 text-white backdrop-blur-md border border-blue-500/50 rounded-full font-bold hover:bg-blue-600/40 transition transform hover:-translate-y-1">
           Solicitar Visita Guiada
         </a>
       </div>
     </div>
 
     <!-- Decoration element -->
-    <div
-      class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-slate-50 to-transparent z-10"
-    ></div>
+    <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-slate-50 to-transparent z-10"></div>
   </section>
 
   <!-- Exposiciones Section -->
@@ -144,9 +103,7 @@
     <div class="container mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Exposiciones Destacadas</h2>
-        <div
-          class="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto rounded-full mb-6"
-        ></div>
+        <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto rounded-full mb-6"></div>
         <p class="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
           Sumérgete en nuestras colecciones permanentes. Aeronaves reales, simuladores y piezas
           icónicas que hicieron posible el sueño de volar.
@@ -156,17 +113,13 @@
       <div class="grid md:grid-cols-3 gap-10">
         <!-- Card 1 -->
         <div
-          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-        >
+          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
           <div class="relative h-60 overflow-hidden">
-            <img
-              src="https://aeromuseo.org/wp-content/uploads/2020/11/DC3_opt-optimized.jpg"
-              class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-              alt="Aviones"
-            />
+            <img src="https://aeromuseo.org/wp-content/uploads/2020/11/DC3_opt-optimized.jpg"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Aviones" />
             <div
-              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"
-            ></div>
+              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300">
+            </div>
           </div>
           <div class="p-8">
             <h4 class="text-2xl font-bold mb-3 text-slate-800 group-hover:text-blue-600 transition">
@@ -181,17 +134,14 @@
 
         <!-- Card 2 -->
         <div
-          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-        >
+          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
           <div class="relative h-60 overflow-hidden">
             <img
               src="https://cadenaser.com/resizer/v2/7OEOIX4OJBAV7ITS5AGLLTPL2Q.jpg?auth=9a5db283b277553df97b1288d53be6e9760c27359e1b4a1098f516a73f65a2c1"
-              class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-              alt="Maquinaria"
-            />
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Maquinaria" />
             <div
-              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"
-            ></div>
+              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300">
+            </div>
           </div>
           <div class="p-8">
             <h4 class="text-2xl font-bold mb-3 text-slate-800 group-hover:text-blue-600 transition">
@@ -206,17 +156,13 @@
 
         <!-- Card 3 -->
         <div
-          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-        >
+          class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
           <div class="relative h-60 overflow-hidden">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDWpWkD0zPBO8uN4dERvcWSit1OHnhDDbAgg&s"
-              class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-              alt="Historia"
-            />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDWpWkD0zPBO8uN4dERvcWSit1OHnhDDbAgg&s"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Historia" />
             <div
-              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"
-            ></div>
+              class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300">
+            </div>
           </div>
           <div class="p-8">
             <h4 class="text-2xl font-bold mb-3 text-slate-800 group-hover:text-blue-600 transition">
@@ -236,10 +182,8 @@
   <section id="visita" class="relative py-24 bg-slate-900 text-white overflow-hidden">
     <div class="absolute inset-0">
       <div class="absolute inset-0 bg-blue-900/90 mix-blend-multiply z-10"></div>
-      <img
-        src="https://www.oneair.es/wp-content/uploads/2022/04/museo-aeronautico-aeropuerto-malaga.jpg"
-        class="w-full h-full object-cover grayscale opacity-40"
-      />
+      <img src="https://www.oneair.es/wp-content/uploads/2022/04/museo-aeronautico-aeropuerto-malaga.jpg"
+        class="w-full h-full object-cover grayscale opacity-40" />
     </div>
 
     <div class="container mx-auto px-6 relative z-20 text-center max-w-4xl">
@@ -267,18 +211,11 @@
         </div>
       </div>
 
-      <a
-        routerLink="/reservas"
-        class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-full shadow-lg transform hover:-translate-y-1 transition duration-200 text-lg"
-      >
+      <a routerLink="/reservas"
+        class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-full shadow-lg transform hover:-translate-y-1 transition duration-200 text-lg">
         Reservar Mi Visita Guiada
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M14 5l7 7m0 0l-7 7m7-7H3"
-          ></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
         </svg>
       </a>
     </div>
@@ -290,11 +227,8 @@
       <div class="grid md:grid-cols-4 gap-10 mb-12">
         <div class="col-span-1 md:col-span-2">
           <div class="flex items-center space-x-3 mb-6">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
-              alt="Logo"
-              class="h-8 w-auto rounded-md opacity-80"
-            />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7i0cfvOixdV5yLBKaGl53O_pi-CI6G5vjxQ&s"
+              alt="Logo" class="h-8 w-auto rounded-md opacity-80" />
             <span class="text-xl font-bold text-white">Aeromuseo</span>
           </div>
           <p class="text-slate-400 max-w-sm mb-6">
@@ -309,14 +243,10 @@
               <a routerLink="/" class="text-slate-400 hover:text-cyan-400 transition">Inicio</a>
             </li>
             <li>
-              <a routerLink="/museo" class="text-slate-400 hover:text-cyan-400 transition"
-                >El Museo</a
-              >
+              <a routerLink="/museo" class="text-slate-400 hover:text-cyan-400 transition">El Museo</a>
             </li>
             <li>
-              <a routerLink="/eventos" class="text-slate-400 hover:text-cyan-400 transition"
-                >Eventos y Visitas</a
-              >
+              <a routerLink="/eventos" class="text-slate-400 hover:text-cyan-400 transition">Eventos y Visitas</a>
             </li>
           </ul>
         </div>
@@ -324,30 +254,22 @@
           <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Legal</h4>
           <ul class="space-y-3">
             <li>
-              <a href="#" class="text-slate-400 hover:text-cyan-400 transition"
-                >Política de Privacidad</a
-              >
+              <a href="#" class="text-slate-400 hover:text-cyan-400 transition">Política de Privacidad</a>
             </li>
             <li>
-              <a href="#" class="text-slate-400 hover:text-cyan-400 transition"
-                >Accesibilidad WEB (WCAG)</a
-              >
+              <a href="#" class="text-slate-400 hover:text-cyan-400 transition">Accesibilidad WEB (WCAG)</a>
             </li>
             <li>
-              <a
-                routerLink="/login"
-                class="text-cyan-500 hover:text-cyan-300 font-semibold transition"
-                >Acceso Administradores</a
-              >
+              <a routerLink="/admin" class="text-cyan-500 hover:text-cyan-300 font-semibold transition">Acceso
+                Administradores</a>
             </li>
           </ul>
         </div>
       </div>
       <div
-        class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm"
-      >
+        class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
         <p>&copy; 2026 Aeromuseo de Málaga. Proyecto Integrado.</p>
       </div>
     </div>
   </footer>
-</div>
+</div>En
